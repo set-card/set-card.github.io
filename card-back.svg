@@ -5,17 +5,18 @@
         <feDropShadow dx='5' dy='5' stdDeviation='5' />
     </filter>
     
-    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#E55' fill-opacity='1' transform="rotate(0 0 0) translate(0 0)"></path>
-    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#E55' fill-opacity='1' transform="rotate(270 0 333) translate(0 333)"></path>
-    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#E55' fill-opacity='1' transform="rotate(90 240 0) translate(240 0)"></path>
-    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#E55' fill-opacity='1' transform="rotate(180 240 333) translate(240 333)"></path>
+    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#e6196b' fill-opacity='1' transform="rotate(0 0 0) translate(0 0)"></path>
+    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#e6196b' fill-opacity='1' transform="rotate(270 0 333) translate(0 333)"></path>
+    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#e6196b' fill-opacity='1' transform="rotate(90 240 0) translate(240 0)"></path>
+    <path d='m 10 10 z z l 8 0 l 5 13 l -13 -5 z' fill='#e6196b' fill-opacity='1' transform="rotate(180 240 333) translate(240 333)"></path>
 
     <rect width='220' height='310' x='10' y='10' ry='1' fill='url(#A)' fill-opacity='1 '></rect>
 
     <text x='200' y='318' stroke='black' text-anchor='middle' transform='rotate(0 0 0)' opacity='.7'
-        style='font-weight:700;font-family:Arial;letter-spacing:2px;fill:#555;stroke:none;font-size:8px;'>8699</text>
+        style='font-weight:700;font-family:Arial;letter-spacing:2px;fill:#555;stroke:none;font-size:8px;'>= .=</text>
 
-    <path d="M70 142 h100v50h-100 Z" fill="red" />
-    <path d="m60 167 c 72 -57 80 26 133 -17 q -37 50 -75 30 q -38 -20 -58 -13 z" fill="yellow" />
-    <ellipse cx="120" cy="167" rx="55" ry="25" fill="blue" />
+    <path d="M70 142 h100v50h-100 Z" fill="	#e6196b" />
+    <ellipse cx="120" cy="102" rx="55" ry="25" fill="#6666ff" />
+    <path d="m60 227 c 72 -57 80 26 133 -17 q -37 50 -75 30 q -38 -20 -58 -13 z" fill="#1dc973" />
+
 </svg>
