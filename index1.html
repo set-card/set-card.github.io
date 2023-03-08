@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>Set Card</title>
+</head>
+
+<body>
+<h1>Prototype &lt;SET-CARD> Web Component</h1>
+<h3>For: Niels de Jong</h3>
+<a href="https://yqnn.github.io/svg-path-editor/#M45,50h150v50h-150Z">https://yqnn.github.io/svg-path-editor/#</a>
+    <script>
+        customElements.define("set-card", class extends HTMLElement {
+            constructor() {
+                super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+                    <defs>
+                        <bx:grid x="0" y="0" width="16" height="16"/>
+                        <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-0" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 38.36052, -39.786184)" spreadMethod="pad">
+                        <stop offset="0" style="stop-color: rgb(69, 23, 41);"/>
+                        <stop offset="1" style="stop-color: rgb(209, 0, 136);"/>
+                        </linearGradient>
+                        <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-1" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 38.342392, 260.19577)" spreadMethod="pad">
+                        <stop offset="0" style="stop-color: rgb(69, 23, 41);"/>
+                        <stop offset="1" style="stop-color: rgb(209, 0, 136);"/>
+                        </linearGradient>
+                        <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-2" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 245.321625, -39.810837)" spreadMethod="pad">
+                        <stop offset="0" style="stop-color: rgb(69, 23, 41);"/>
+                        <stop offset="1" style="stop-color: rgb(209, 0, 136);"/>
+                        </linearGradient>
+                        <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-3" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 245.357605, 260.242676)" spreadMethod="pad">
+                        <stop offset="0" style="stop-color: rgb(69, 23, 41);"/>
+                        <stop offset="1" style="stop-color: rgb(209, 0, 136);"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="239" height="333" rx="12" ry="12" stroke="#444" fill="#FEFEFE" fill-opacity="1" stroke-width="1" x="16" y="16" style="pointer-events: none;"/>
+                    <rect width="220" height="310" x="26" y="26" ry="1" fill="url(#A)" fill-opacity="1 "/>
+                    <text x="216" y="334" stroke="black" text-anchor="middle" opacity=".7" style="font-weight: 700; font-family: Arial; letter-spacing: 2px; fill: rgb(85, 85, 85); stroke: none; font-size: 8px; white-space: pre;">= .=</text>
+                    <path d="M 86 160 L 186 160 L 186 208 L 86 208 L 86 160 Z" fill="&#9;#e6196b" style=""/>
+                    <ellipse cx="136" cy="119.5" rx="55" ry="23.5" fill="#6666ff" style=""/>
+                    
+                    <path style="fill-rule: nonzero;" d="M 81.588 255.165 C 133.281 186.242 133.281 263.781 193.588 237.935 C 141.895 315.473 141.895 237.935 81.588 255.165 Z" fill="#1dc973" bx:origin="0.64 -1.137945"/>
+                    <path d="M 26.003 26.011 Z Z M 26.003 26.011 L 34.003 26.011 L 39.003 39.011 L 26.003 34.011 L 26.003 26.011 Z" style="fill: url(#gradient-0);" fill-opacity="1"/>
+                    <path style="fill: rgb(79, 8, 41);" d="M 26.002 25.971 L 39.003 39.011 L 26.003 34.091 L 26.002 25.971 Z"/>
+                    <path d="M 25.984 325.992 Z Z M 25.984 325.992 L 33.984 325.992 L 38.984 338.992 L 25.984 333.992 L 25.984 325.992 Z" style="fill: url(#gradient-1);" fill-opacity="1" transform="matrix(0, -1, 1, 0, -300.008005, 364.976002)"/>
+                    <path style="fill: rgb(79, 8, 41);" d="M 26.02 325.972 L 39.021 339.012 L 26.021 334.092 L 26.02 325.972 Z" transform="matrix(0, -1, 1, 0, -299.971488, 365.012488)"/>
+                    <path d="M 232.964 25.986 Z Z M 232.964 25.986 L 240.964 25.986 L 245.964 38.986 L 232.964 33.986 L 232.964 25.986 Z" style="fill: url(#gradient-2);" fill-opacity="1" transform="matrix(0, 1, -1, 0, 271.950006, -206.978004)"/>
+                    <path style="fill: rgb(79, 8, 41);" d="M 232.984 25.966 L 245.985 39.006 L 232.985 34.086 L 232.984 25.966 Z" transform="matrix(0, 1, -1, 0, 271.970497, -206.998496)"/>
+                    <path d="M 233 326.04 Z Z M 233 326.041  L 241 326.04 L 246 339.0 L 233 334.04 L 233 326.04 Z" style="fill: url(#gradient-3);" fill-opacity="1" transform="matrix(-1, 0, 0, -1, 478.999999, 665.080018)"/>
+                    <path style="fill: rgb(79, 8, 41);" d="M 233 326.041 L 246.001 339.0 L 233.001 334.1 L 233 326.01 Z" transform="matrix(-1, 0, 0, -1, 479.001009, 665.121978)"/>
+                    </svg>`
+            }
+            get shapes() {
+                return this.shadowRoot.querySelector("#shapes");
+            }
+            set shapes(svg) {
+                this.shapes.innerHTML = svg;
+            }
+            connectedCallback() {
+                // read attributes
+                // create id=shapes inside svg
+                let shape = {
+                    "rect": `<rect x="45" y="50" width="150" height="50" fill="red" />`,
+                    "wiggle": `<path id="shape2" d="m45 150c36-42 72 24 108 0q0 24 0 48-30 24-50 0-29-32-58 0z" fill="yellow" />`,
+                    "oval": `<ellipse cx="120" cy="240" rx="65" ry="20" fill="blue" />`
+                }
+                let shapes = shape[this.getAttribute("shape1")] + shape[this.getAttribute("shape2")] + shape[this.getAttribute("shape3")];
+                this.shapes = shapes;
+            }
+        });
+    </script>
+    <style>
+        set-card {
+            display: inline-block;
+            width: 300px;
+        }
+    </style>
+
+    <set-card shape1="rect" shape2="oval" shape3="wiggle"></set-card>
+    <set-card shape1="rect"></set-card>
+    <set-card shape1="oval" shape2="rect"></set-card>
+</body>
+
+</html>
