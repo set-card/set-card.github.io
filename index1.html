@@ -44,6 +44,12 @@
                     <path d="M 233 326.04 Z Z M 233 326.041  L 241 326.04 L 246 339.0 L 233 334.04 L 233 326.04 Z" style="fill: url(#gradient-3);" fill-opacity="1" transform="matrix(-1, 0, 0, -1, 478.999999, 665.080018)"/>
                     <path style="fill: rgb(79, 8, 41);" d="M 233 326.041 L 246.001 339.0 L 233.001 334.1 L 233 326.01 Z" transform="matrix(-1, 0, 0, -1, 479.001009, 665.121978)"/>
                     
+                    <defs>
+                        <pattern id="halfs" viewBox="0,0,10,10" width="10%" height="10%" fill="#fff" patternTransform='scale(0.5) rotate(45)'>
+                            <rect x='0' y='0' width='10%' height='1.75%' />
+                        </pattern>
+                    </defs>
+                    
                     <g id="shapes">    
                     <path id="shape1" d="M45 50h150v50h-150 Z" fill="red" /> 
                     </g>
@@ -59,12 +65,70 @@
                 // read attributes
                 // create id=shapes inside svg
                 let shape = {
-                    "rect": `<path d="M 86 160 L 186 160 L 186 208 L 86 208 L 86 160 Z" fill="&#9;#e6196b" style=""/>`,
-                    "wiggle": `<path style="fill-rule: nonzero;" d="M 81.588 255.165 C 133.281 186.242 133.281 263.781 193.588 237.935 C 141.895 315.473 141.895 237.935 81.588 255.165 Z" fill="#1dc973" bx:origin="0.64 -1.137945"/>`,
-                    "oval": `<ellipse cx="136" cy="119.5" rx="55" ry="23.5" fill="#6666ff" style=""/>`
+                    "rect": `<rect transform="translate(0 0)" x="81" y="160" width="109" height="48" fill="#000000" stroke="#000000" stroke-width="3px" style=""/>`,
+                    "wiggle": `<path transform="translate(0 0)" style="fill-rule: nonzero;" d="m81 190c51-69 51 9 112-17-52 77-52 0-112 17z" fill="#000000" stroke="#000000" stroke-width="3px" bx:origin="0.64 -1.137945"/>`,
+                    "oval": `<ellipse transform="translate(0 0)" cx="136" cy="184" rx="55" ry="23.5" fill="#000000" stroke="#000000" stroke-width="3px" style=""/>`,
+                    "red": "red",
+                    "green": "green",
+                    "blue": "blue",
+                    "halfs": `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#halfs)" style=""/>`
                 }
-                let shapes = shape[this.getAttribute("shape1")] + shape[this.getAttribute("shape2")] + shape[this.getAttribute("shape3")];
-                this.shapes = shapes;
+
+
+                let shape1 = this.getAttribute("shape1");
+                let shape2 = this.getAttribute("shape2");
+                let shape3 = this.getAttribute("shape3");
+                let color = this.getAttribute("color");
+                let filling = this.getAttribute("filling");
+
+                console.log(shape1,shape2,shape3);
+                
+                if(shape1==shape2 && shape2==shape3){
+                    // shape1 naar boven
+                    // shape2 naar beneden
+
+                    let shapes = shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, colour(shape[color])) + 
+                    shape[shape2].replace("0 0", "0 75").replace(/#000000/g, colour(shape[color])) + 
+                    shape[shape3].replace(/#000000/g, colour(shape[color])) +
+                    shape[filling];
+
+                    console.log(shapes);
+                    this.shapes = shapes;
+
+                } else if(shape1==shape2) {
+                    // shape1 naar boven
+                    // shape2 naar beneden
+                    let shapes = shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, colour(shape[color])) + 
+                    shape[shape2].replace("0 0", "0 37").replace(/#000000/g, colour(shape[color])) +
+                    shape[filling];
+
+                    this.shapes = shapes;
+                    
+                } else {
+                    let shapes = shape[shape1].replace(/#000000/g, colour(shape[color])) +
+                    shape[filling];
+
+                    this.shapes = shapes;
+                }
+                
+                function colour(x){
+                    switch(x) {
+                    case "red":
+                        x = "#e6196b";
+                        return x;
+
+                    case "green":
+                        x = "#1dc973";
+                        return x;
+
+                    case "blue":
+                        x = "#6666ff";
+                        return x;
+                }
+                }
+                //red #e6196b
+                //green #1dc973
+                //blue #6666ff
             }
         });
     </script>
@@ -75,9 +139,11 @@
         }
     </style>
 
-    <set-card shape1="rect" shape2="oval" shape3="wiggle" style="filter: invert(200%) sepia(100%) saturate(1000%) hue-rotate(845deg) brightness(100%) contrast(100%);"></set-card>
-    <set-card shape1="rect"></set-card>
-    <set-card shape1="oval" shape2="rect"></set-card>
+    <set-card shape1="oval" shape2="oval" color="blue" filling="halfs"></set-card>
+    <set-card shape1="rect" color="green" filling="halfs"></set-card>
+    <set-card shape1="wiggle" shape2="wiggle" shape3="wiggle" color="red" filling="halfs"></set-card>
+    <set-card shape1="rect" shape2="rect" shape3="rect" color="blue"></set-card>
+    
 </body>
 
 </html>
