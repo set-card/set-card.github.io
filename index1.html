@@ -11,7 +11,7 @@
     <script>
         customElements.define("set-card", class extends HTMLElement {
             constructor() {
-                super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+                super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 500 375" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
                     <defs>
                         <bx:grid x="0" y="0" width="16" height="16"/>
                         <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-0" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 38.36052, -39.786184)" spreadMethod="pad">
@@ -71,24 +71,31 @@
                 // read attributes
                 // create id=shapes inside svg
                 let shape = {
-                    "rect": `<rect transform="translate(0 0)" x="81" y="160" width="109" height="48" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
-                    "wiggle": `<path transform="translate(0 0)" style="fill-rule: nonzero;" d="m81 190c51-69 51 9 112-17-52 77-52 0-112 17z" stroke="#000000" fill="#000000" stroke-width="3px" bx:origin="0.64 -1.137945"/>`,
-                    "oval": `<ellipse transform="translate(0 0)" cx="136" cy="184" rx="55" ry="23.5" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
-                    "red": "red",
-                    "green": "green",
-                    "blue": "blue",
-                    "halfs": `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#halfs)" style=""/>`,
-                    "emptys": `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#emptys)" style=""/>`,
-                    "1": 1,
-                    "2": 2,
-                    "3": 3
+                    1: 1,
+                    2: 2,
+                    3: 3,
+
+                    /*"rect"*/4: `<rect transform="translate(0 0)" x="81" y="160" width="109" height="48" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
+                    /*"wiggle"*/5: `<path transform="translate(0 0)" style="fill-rule: nonzero;" d="m81 190c51-69 51 9 112-17-52 77-52 0-112 17z" stroke="#000000" fill="#000000" stroke-width="3px" bx:origin="0.64 -1.137945"/>`,
+                    /*"oval"*/6: `<ellipse transform="translate(0 0)" cx="136" cy="184" rx="55" ry="23.5" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
+                    
+                    /*"red"*/7: "#e6196b",
+                    /*"green"*/8: "#1dc973",
+                    /*"blue"*/9: "#6666ff",
+
+                    /*"fulls"*/10: ``,
+                    /*"halfs"*/11: `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#halfs)" style=""/>`,
+                    /*"emptys"*/12: `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#emptys)" style=""/>`
                 } 
+                
+                function getRandomInt(max) {
+                    return Math.floor(Math.random() * max) + 1;
+                }
 
-
-                let shape1 = this.getAttribute("shape1");
-                let amount = this.getAttribute("amount");
-                let color = this.getAttribute("color");
-                let filling = this.getAttribute("filling");
+                let amount = getRandomInt(3);
+                let shape1 = getRandomInt(3)+3;
+                let color = getRandomInt(3)+6;
+                let filling = getRandomInt(3)+9;
 
                 console.log(amount);
                 let t = 0;
@@ -97,70 +104,77 @@
                 {
                 case 3:
                     console.log(amount);
-                    shapes = shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, colour(shape[color])) + 
-                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, colour(shape[color])) + 
-                    shape[shape1].replace(/#000000/g, colour(shape[color])) +
+                    shapes = shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, shape[color]) + 
+                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, shape[color]) + 
+                    shape[shape1].replace(/#000000/g, shape[color]) +
                     shape[filling] +
-                    shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color])) + 
-                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color])) +
-                    shape[shape1].replace(/#000000/g, match => ++t === 6 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color]));
+                    shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) + 
+                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) +
+                    shape[shape1].replace(/#000000/g, match => ++t === 6 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
 
                     console.log(shapes);
                     this.shapes = shapes;
                     break;
 
                 case 2:
-                    shapes = shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, colour(shape[color])) + 
-                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, colour(shape[color])) +
+                    shapes = shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, shape[color]) + 
+                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, shape[color]) +
                     shape[filling] + 
-                    shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color])) + 
-                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color]));
+                    shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) + 
+                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
 
                     this.shapes = shapes;
                     break;
                     
                 case 1:
-                    shapes = shape[shape1].replace(/#000000/g, colour(shape[color])) +
+                    shapes = shape[shape1].replace(/#000000/g, shape[color]) +
                     shape[filling] + 
-                    shape[shape1].replace("0 0", "0 0").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", colour(shape[color]));
+                    shape[shape1].replace("0 0", "0 0").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
 
                     this.shapes = shapes;
                     break;
-                }
-                
-                function colour(x){
-                    switch(x) {
-                    case "red":
-                        x = "#e6196b";
-                        return x;
-
-                    case "green":
-                        x = "#1dc973";
-                        return x;
-
-                    case "blue":
-                        x = "#6666ff";
-                        return x;
-                    }
                 }
                 //red #e6196b
                 //green #1dc973
                 //blue #6666ff
             }
+            
         });
     </script>
     <style>
-        set-card {
+        /**{
+            border-color: red;
+            border-style: solid;
+            border-width: 2px;
+        }*/
+        .board {
+            width: 1300px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+        }
+
+        set-card {  
             display: inline-block;
             width: 300px;
         }
     </style>
+    <div class="board">
+        <set-card shape1 amount color filling></set-card>
+        <set-card shape1 amount color filling></set-card>    
+        <set-card shape1 amount color filling></set-card> 
+        
+        <set-card shape1 amount color filling></set-card>
+        <set-card shape1 amount color filling></set-card>    
+        <set-card shape1 amount color filling></set-card>   
 
-    <set-card shape1="oval" amount="2" color="blue" filling="halfs"></set-card>
-    <set-card shape1="rect" amount="1" color="green" filling="fulls"></set-card>
-    <set-card shape1="wiggle" amount="3" color="red" filling="emptys"></set-card>
+        <set-card shape1 amount color filling></set-card>
+        <set-card shape1 amount color filling></set-card>    
+        <set-card shape1 amount color filling></set-card>   
 
-
+        <set-card shape1 amount color filling></set-card>
+        <set-card shape1 amount color filling></set-card>    
+        <set-card shape1 amount color filling></set-card>   
+    </div>
     
 </body>
 
