@@ -5,13 +5,16 @@
 </head>
 
 <body>
-<h1>Prototype &lt;SET-CARD> Web Component</h1>
-<h3>For: Niels de Jong</h3>
-<a href="https://yqnn.github.io/svg-path-editor/#M45,50h150v50h-150Z">https://yqnn.github.io/svg-path-editor/#</a>
+    <h1>Prototype &lt;SET-CARD> Web Component</h1>
+    <h3>For: Niels de Jong</h3>
+    <a href="https://yqnn.github.io/svg-path-editor/#M45,50h150v50h-150Z">https://yqnn.github.io/svg-path-editor/#</a>
     <script>
+        let board = [];
+        let i = 0;
+        let select = [];
         customElements.define("set-card", class extends HTMLElement {
             constructor() {
-                super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 500 375" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+                super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 275 375" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
                     <defs>
                         <bx:grid x="0" y="0" width="16" height="16"/>
                         <linearGradient gradientUnits="userSpaceOnUse" x1="43.5" y1="37" x2="43.5" y2="50" id="gradient-0" gradientTransform="matrix(0.702278, 0.711904, -0.860576, 0.858689, 38.36052, -39.786184)" spreadMethod="pad">
@@ -68,6 +71,7 @@
                 this.shapes.innerHTML = svg;
             }
             connectedCallback() {
+
                 // read attributes
                 // create id=shapes inside svg
                 let shape = {
@@ -78,7 +82,7 @@
                     /*"rect"*/4: `<rect transform="translate(0 0)" x="81" y="160" width="109" height="48" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
                     /*"wiggle"*/5: `<path transform="translate(0 0)" style="fill-rule: nonzero;" d="m81 190c51-69 51 9 112-17-52 77-52 0-112 17z" stroke="#000000" fill="#000000" stroke-width="3px" bx:origin="0.64 -1.137945"/>`,
                     /*"oval"*/6: `<ellipse transform="translate(0 0)" cx="136" cy="184" rx="55" ry="23.5" stroke="#000000" fill="#000000" stroke-width="3px" style=""/>`,
-                    
+
                     /*"red"*/7: "#e6196b",
                     /*"green"*/8: "#1dc973",
                     /*"blue"*/9: "#6666ff",
@@ -86,59 +90,90 @@
                     /*"fulls"*/10: ``,
                     /*"halfs"*/11: `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#halfs)" style=""/>`,
                     /*"emptys"*/12: `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#emptys)" style=""/>`
-                } 
-                
+                }
+
+                /*randomizer en doublecheck*/
                 function getRandomInt(max) {
                     return Math.floor(Math.random() * max) + 1;
                 }
+                let amount, shape1, color, filling, id;
 
-                let amount = getRandomInt(3);
-                let shape1 = getRandomInt(3)+3;
-                let color = getRandomInt(3)+6;
-                let filling = getRandomInt(3)+9;
+                do {
+                    amount = getRandomInt(3);
+                    shape1 = getRandomInt(3) + 3;
+                    color = getRandomInt(3) + 6;
+                    filling = getRandomInt(3) + 9;
+                    id = "CARD_" + amount + shape1 + color + filling;
+                    console.log(amount, shape1, color, filling);
+                } while (document.getElementById(id));
 
-                console.log(amount);
+                this.setAttribute("amount", amount);
+                this.setAttribute("shape1", shape1);
+                this.setAttribute("color", color);
+                this.setAttribute("filling", filling);
+                this.id = id;
+                board [i] = id;
+                i++;
+                console.log(board);
+                // nu check of id al bestaat
+                // zo ja, dan opnieuw maken
+                // zo nee, dan is het goed
+                /**/
+
                 let t = 0;
                 let shapes;
-                switch(shape[amount])
-                {
-                case 3:
-                    console.log(amount);
-                    shapes = shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, shape[color]) + 
-                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, shape[color]) + 
-                    shape[shape1].replace(/#000000/g, shape[color]) +
-                    shape[filling] +
-                    shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) + 
-                    shape[shape1].replace("0 0", "0 75").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) +
-                    shape[shape1].replace(/#000000/g, match => ++t === 6 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
+                switch (shape[amount]) {
+                    case 3:
+                        shapes = shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, shape[color]) +
+                            shape[shape1].replace("0 0", "0 75").replace(/#000000/g, shape[color]) +
+                            shape[shape1].replace(/#000000/g, shape[color]) +
+                            shape[filling] +
+                            shape[shape1].replace("0 0", "0 -75").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) +
+                            shape[shape1].replace("0 0", "0 75").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) +
+                            shape[shape1].replace(/#000000/g, match => ++t === 6 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
 
-                    console.log(shapes);
-                    this.shapes = shapes;
-                    break;
+                        this.shapes = shapes;
+                        break;
 
-                case 2:
-                    shapes = shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, shape[color]) + 
-                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, shape[color]) +
-                    shape[filling] + 
-                    shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) + 
-                    shape[shape1].replace("0 0", "0 37").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
+                    case 2:
+                        shapes = shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, shape[color]) +
+                            shape[shape1].replace("0 0", "0 37").replace(/#000000/g, shape[color]) +
+                            shape[filling] +
+                            shape[shape1].replace("0 0", "0 -37").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]) +
+                            shape[shape1].replace("0 0", "0 37").replace(/#000000/g, match => ++t === 4 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
 
-                    this.shapes = shapes;
-                    break;
-                    
-                case 1:
-                    shapes = shape[shape1].replace(/#000000/g, shape[color]) +
-                    shape[filling] + 
-                    shape[shape1].replace("0 0", "0 0").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
+                        this.shapes = shapes;
+                        break;
 
-                    this.shapes = shapes;
-                    break;
+                    case 1:
+                        shapes = shape[shape1].replace(/#000000/g, shape[color]) +
+                            shape[filling] +
+                            shape[shape1].replace("0 0", "0 0").replace(/#000000/g, match => ++t === 2 ? "rgba( 0, 0, 0, 0.0 )" : match).replace("#000000", shape[color]);
+
+                        this.shapes = shapes;
+                        break;
                 }
                 //red #e6196b
                 //green #1dc973
                 //blue #6666ff
+
+                document.querySelectorAll("div > set-card").forEach(setCard => {
+                    setCard.onclick = (evt) => {
+                        let choice = board[evt.target.getAttribute("idx") - 1];
+
+                        select.push(choice);
+
+                        /*<- set check hier ->*/
+
+                        if (select.length == 3) {
+                            console.log(select);
+                            select = [];
+                        }
+                    }
+                })
+
             }
-            
+
         });
     </script>
     <style>
@@ -149,33 +184,40 @@
         }*/
         .board {
             width: 1300px;
+            margin-left: 60px;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 1fr;
         }
 
-        set-card {  
+        set-card {
             display: inline-block;
-            width: 300px;
+            width: 200px;
+            margin-right: 120px;
+        }
+
+        set-card:hover {
+            background-color: #eeddff;
         }
     </style>
     <div class="board">
-        <set-card shape1 amount color filling></set-card>
-        <set-card shape1 amount color filling></set-card>    
-        <set-card shape1 amount color filling></set-card> 
-        
-        <set-card shape1 amount color filling></set-card>
-        <set-card shape1 amount color filling></set-card>    
-        <set-card shape1 amount color filling></set-card>   
+        <set-card idx = "1" shape1 amount color filling></set-card>
+        <set-card idx = "2" shape1 amount color filling></set-card>
+        <set-card idx = "3" shape1 amount color filling></set-card>
 
-        <set-card shape1 amount color filling></set-card>
-        <set-card shape1 amount color filling></set-card>    
-        <set-card shape1 amount color filling></set-card>   
+        <set-card idx = "4" shape1 amount color filling></set-card>
+        <set-card idx = "5" shape1 amount color filling></set-card>
+        <set-card idx = "6" shape1 amount color filling></set-card>
 
-        <set-card shape1 amount color filling></set-card>
-        <set-card shape1 amount color filling></set-card>    
-        <set-card shape1 amount color filling></set-card>   
+        <set-card idx = "7" shape1 amount color filling></set-card>
+        <set-card idx = "8" shape1 amount color filling></set-card>
+        <set-card idx = "9" shape1 amount color filling></set-card>
+
+        <set-card idx = "10" shape1 amount color filling></set-card>
+        <set-card idx = "11" shape1 amount color filling></set-card>
+        <set-card idx = "12" shape1 amount color filling></set-card>
+
     </div>
-    
+
 </body>
 
 </html>
