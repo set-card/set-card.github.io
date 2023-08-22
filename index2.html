@@ -6,11 +6,11 @@
 
 <body>
     <h1>Prototype &lt;SET-CARD> Web Component</h1>
-    <h3>For: Niels de Jong</h3>
     <a href="https://yqnn.github.io/svg-path-editor/#M45,50h150v50h-150Z">https://yqnn.github.io/svg-path-editor/#</a>
     <script>
         let board = [];
         let i = 0;
+        var score = 0;
         let select = [];
         customElements.define("set-card", class extends HTMLElement {
             constructor() {
@@ -157,6 +157,7 @@
                 //green #1dc973
                 //blue #6666ff
 
+                
                 document.querySelectorAll("div > set-card").forEach(setCard => {
                     setCard.onclick = (evt) => {
                         let choice = board[evt.target.getAttribute("idx") - 1];
@@ -170,6 +171,10 @@
                         if (select.length == 3) {
                             console.log(select);
                             if (SETcheck(select) == true){
+                                score++;
+                                document.getElementById('score').innerHTML = "Score: " + score;
+                                console.log(score);
+
                                 console.log("SET!");
                             }
                             select = [];
@@ -221,9 +226,28 @@
             border-style: solid;
             border-width: 2px;
         }*/
+
+        body{
+            background: #222222;
+        }
+
+        title, h1, h3{
+            color: #eee;
+        }
+
+        a{
+            color: #eee;
+        }
+        a:hover{
+            color: #00ffff;
+        }
+
         .board {
             width: 1300px;
-            margin-left: 60px;
+            margin-left: 10px;
+            border: 4px solid #ff0062;
+            padding-left: 125px;
+            background: #222222;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 1fr;
         }
@@ -235,9 +259,46 @@
         }
 
         set-card:hover {
-            background-color: #eeddff;
+            border: 1px solid #ff0062;
         }
+
+        .sidenav {
+            height: 15%;
+
+            width: 130px;
+            position: fixed;
+            z-index: 1;
+            top: 20px;
+            right: 10px;
+            background: #eee;
+            overflow-x: hidden;
+            padding: 8px 0;
+        }
+        .sidenav div {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #eee;
+            display: block;
+        }
+        .sidenav #score{
+            color: #064579;
+        }
+
+        .sidenav div:hover {
+            color: #064579;
+        }
+
     </style>
+
+    <div class="sidenav">
+        <div id= "score"></div> 
+        <script>
+        document.getElementById('score').innerHTML = "Score: " + score;
+        </script>
+        
+        <div>SET!</div>
+    </div>
     <div class="board">
         <set-card idx = "1" shape1 amount color filling></set-card>
         <set-card idx = "2" shape1 amount color filling></set-card>
@@ -254,9 +315,9 @@
         <set-card idx = "10" shape1 amount color filling></set-card>
         <set-card idx = "11" shape1 amount color filling></set-card>
         <set-card idx = "12" shape1 amount color filling></set-card>
-
     </div>
 
+    <h3>For: Niels de Jong</h3> 
 </body>
 
 </html>
