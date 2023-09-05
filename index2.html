@@ -2,6 +2,7 @@
 
 <head>
     <title>Set Card</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>s
 </head>
 
 <body>
@@ -12,6 +13,86 @@
         let i = 0;
         var score = 0;
         let select = [];
+
+        function Reload() {
+            console.warn('reload', select);
+            $('#set-card').load("\\set-card.github.io\index2.html #set-card");
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max) + 1;
+        }
+
+        function SETcheck(selection) {
+            //console.warn("SETcheck", typeof selection, selection);
+            let SET = 0;
+            const SETbits0 = selection[0].split("");
+            const SETbits1 = selection[1].split("");
+            const SETbits2 = selection[2].split("");
+            document.getElementById("num").style.color = "#eee";
+            document.getElementById("shap").style.color = "#eee";
+            document.getElementById("colr").style.color = "#eee";
+            document.getElementById("fill").style.color = "#eee";
+            document.getElementById("set").style.color = "#eee";
+
+            if ((SETbits0[5] == SETbits1[5] && SETbits0[5] == SETbits2[5]) || (SETbits0[5] != SETbits1[5] && SETbits0[5] != SETbits2[5] && SETbits1[5] != SETbits2[5])) {
+                SET = SET + 1;
+            } else {
+                document.getElementById("num").style.color = "#ff0062";
+                console.warn("num!");
+            }
+            if ((SETbits0[6] == SETbits1[6] && SETbits0[6] == SETbits2[6]) || (SETbits0[6] != SETbits1[6] && SETbits0[6] != SETbits2[6] && SETbits1[6] != SETbits2[6])) {
+                SET = SET + 1;
+            } else {
+                document.getElementById("shap").style.color = "#ff0062";
+                console.warn("shap!");
+            }
+            if ((SETbits0[7] == SETbits1[7] && SETbits0[7] == SETbits2[7]) || (SETbits0[7] != SETbits1[7] && SETbits0[7] != SETbits2[7] && SETbits1[7] != SETbits2[7])) {
+                SET = SET + 1;
+            } else {
+                document.getElementById("colr").style.color = "#ff0062";
+                console.warn("colr!");
+            }
+            if ((SETbits0[9] == SETbits1[9] && SETbits0[9] == SETbits2[9]) || (SETbits0[9] != SETbits1[9] && SETbits0[9] != SETbits2[9] && SETbits1[9] != SETbits2[9])) {
+                SET = SET + 1;
+            } else {
+                document.getElementById("fill").style.color = "#ff0062";
+                console.warn("fill!");
+            }
+            console.log(SET);
+            if (SET == 4) {
+                document.getElementById("set").style.color = "#064579";
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function assignClickHandler(setcard) {
+            setcard.onclick = (evt) => {
+                let choice = board[evt.target.getAttribute("idx") - 1];
+
+                if (select.includes(choice)) {
+                    console.warn("Already selected!");
+                } else {
+                    select.push(choice);
+                }
+
+                if (select.length == 3) {
+                    console.log(select);
+                    if (SETcheck(select) == true) {
+                        score++;
+                        document.getElementById('score').innerHTML = "Score: " + score;
+                        Reload();
+
+                        console.log(score);
+                        console.log("SET!");
+                    }
+                    select = [];
+                }
+            }
+        }
+      
         customElements.define("set-card", class extends HTMLElement {
             constructor() {
                 super().attachShadow({ mode: 'open' }).innerHTML = `<svg viewBox="0 0 275 375" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
@@ -92,10 +173,8 @@
                     /*"emptys"*/12: `<rect transform="translate(0 0)" x="61" y="60" width="150" height="250" fill="url(#emptys)" style=""/>`
                 }
 
-/*randomizer en doublecheck*/
-                function getRandomInt(max) {
-                    return Math.floor(Math.random() * max) + 1;
-                }
+                /*randomizer en doublecheck*/
+
                 let amount, shape1, color, filling, id;
 
                 do {
@@ -104,7 +183,7 @@
                     color = getRandomInt(3) + 6;
                     filling = getRandomInt(3) + 9;
                     id = "CARD_" + amount + shape1 + color + filling;
-                    console.log(amount, shape1, color, filling);
+                    //console.log(amount, shape1, color, filling);
                 } while (document.getElementById(id));
 
                 this.setAttribute("amount", amount);
@@ -112,14 +191,15 @@
                 this.setAttribute("color", color);
                 this.setAttribute("filling", filling);
                 this.id = id;
-                board [i] = id;
+                board[i] = id;
                 i++;
-                console.log(board);
+                //console.log(board);
+
                 // nu check of id al bestaat
                 // zo ja, dan opnieuw maken
                 // zo nee, dan is het goed
-/**/
-                
+                /**/
+
                 let t = 0;
                 let shapes;
                 switch (shape[amount]) {
@@ -157,64 +237,8 @@
                 //green #1dc973
                 //blue #6666ff
 
-                
-                document.querySelectorAll("div > set-card").forEach(setCard => {
-                    setCard.onclick = (evt) => {
-                        let choice = board[evt.target.getAttribute("idx") - 1];
 
-                        if (select.includes(choice)) {
-                            console.warn("Already selected!");
-                        } else {
-                            select.push(choice);
-                        }
-
-                        if (select.length == 3) {
-                            console.log(select);
-                            if (SETcheck(select) == true){
-                                score++;
-                                document.getElementById('score').innerHTML = "Score: " + score;
-                                console.log(score);
-
-                                console.log("SET!");
-                            }
-                            select = [];
-                        }
-                    }
-                })
-
-                function SETcheck(selection){
-                    let SET = 0;
-                    const SETbits0 = selection[0].split("");
-                    const SETbits1 = selection[1].split("");
-                    const SETbits2 = selection[2].split("");
-
-                    if((SETbits0[5] == SETbits1[5] && SETbits0[5] == SETbits2[5]) || (SETbits0[5] != SETbits1[5] && SETbits0[5] != SETbits2[5] && SETbits1[5] != SETbits2[5])){
-                        SET = SET + 1;
-                    } else {
-                        console.warn("num!");
-                    }
-                    if((SETbits0[6] == SETbits1[6] && SETbits0[6] == SETbits2[6]) || (SETbits0[6] != SETbits1[6] && SETbits0[6] != SETbits2[6] && SETbits1[6] != SETbits2[6])){
-                        SET = SET + 1;
-                    } else {
-                        console.warn("shap!");
-                    }
-                    if((SETbits0[7] == SETbits1[7] && SETbits0[7] == SETbits2[7]) || (SETbits0[7] != SETbits1[7] && SETbits0[7] != SETbits2[7] && SETbits1[7] != SETbits2[7])){
-                        SET = SET + 1;
-                    } else {
-                        console.warn("col!");
-                    }
-                    if((SETbits0[9] == SETbits1[9] && SETbits0[9] == SETbits2[9]) || (SETbits0[9] != SETbits1[9] && SETbits0[9] != SETbits2[9] && SETbits1[9] != SETbits2[9])){
-                        SET = SET + 1;
-                    } else {
-                        console.warn("fil!");
-                    }
-                    console.log(SET);
-                    if (SET == 4){
-                        return true;
-                    } else{
-                        return false;
-                    }
-                }
+                assignClickHandler(this);
 
             }
 
@@ -227,18 +251,21 @@
             border-width: 2px;
         }*/
 
-        body{
+        body {
             background: #222222;
         }
 
-        title, h1, h3{
+        title,
+        h1,
+        h3 {
             color: #eee;
         }
 
-        a{
+        a {
             color: #eee;
         }
-        a:hover{
+
+        a:hover {
             color: #00ffff;
         }
 
@@ -263,7 +290,7 @@
         }
 
         .sidenav {
-            height: 15%;
+            height: 26%;
 
             width: 130px;
             position: fixed;
@@ -274,6 +301,7 @@
             overflow-x: hidden;
             padding: 8px 0;
         }
+
         .sidenav div {
             padding: 6px 8px 6px 16px;
             text-decoration: none;
@@ -281,43 +309,44 @@
             color: #eee;
             display: block;
         }
-        .sidenav #score{
+
+        .sidenav #score {
             color: #064579;
         }
-
-        .sidenav div:hover {
-            color: #064579;
-        }
-
+        
     </style>
 
     <div class="sidenav">
-        <div id= "score"></div> 
+        <div id="score"></div>
         <script>
-        document.getElementById('score').innerHTML = "Score: " + score;
+            document.getElementById('score').innerHTML = "Score: " + score;
         </script>
-        
-        <div>SET!</div>
+
+        <div id="set">SET!</div>
+        <div id="num">NUM</div>
+        <div id="shap">SHAP</div>
+        <div id="colr">COLR</div>
+        <div id="fill">FILL</div>
     </div>
     <div class="board">
-        <set-card idx = "1" shape1 amount color filling></set-card>
-        <set-card idx = "2" shape1 amount color filling></set-card>
-        <set-card idx = "3" shape1 amount color filling></set-card>
+        <set-card idx="1" shape1 amount color filling></set-card>
+        <set-card idx="2" shape1 amount color filling></set-card>
+        <set-card idx="3" shape1 amount color filling></set-card>
 
-        <set-card idx = "4" shape1 amount color filling></set-card>
-        <set-card idx = "5" shape1 amount color filling></set-card>
-        <set-card idx = "6" shape1 amount color filling></set-card>
+        <set-card idx="4" shape1 amount color filling></set-card>
+        <set-card idx="5" shape1 amount color filling></set-card>
+        <set-card idx="6" shape1 amount color filling></set-card>
 
-        <set-card idx = "7" shape1 amount color filling></set-card>
-        <set-card idx = "8" shape1 amount color filling></set-card>
-        <set-card idx = "9" shape1 amount color filling></set-card>
+        <set-card idx="7" shape1 amount color filling></set-card>
+        <set-card idx="8" shape1 amount color filling></set-card>
+        <set-card idx="9" shape1 amount color filling></set-card>
 
-        <set-card idx = "10" shape1 amount color filling></set-card>
-        <set-card idx = "11" shape1 amount color filling></set-card>
-        <set-card idx = "12" shape1 amount color filling></set-card>
+        <set-card idx="10" shape1 amount color filling></set-card>
+        <set-card idx="11" shape1 amount color filling></set-card>
+        <set-card idx="12" shape1 amount color filling></set-card>
     </div>
 
-    <h3>For: Niels de Jong</h3> 
+    <h3>For: Niels de Jong</h3>
 </body>
 
 </html>
